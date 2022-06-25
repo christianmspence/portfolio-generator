@@ -138,10 +138,19 @@ promptUser()
   .then(portfolioData => {
     const pageHTML = generatePage(portfolioData);
 
-    fs.writeFile('./index.html', pageHTML, err => {
-      if (err) throw (err);
-
+    fs.writeFile('./dist/index.html', pageHTML, err => {
+      if (err) {
+        return;
+      }
       console.log('Page created! Checkout index.html to see it!');
+
+      fs.copyFile('./src/style.css', './dist/style.css', err => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log('Style sheet copied successfully!');
+      });
     });
   });
 
